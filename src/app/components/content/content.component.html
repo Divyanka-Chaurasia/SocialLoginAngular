@@ -1,0 +1,74 @@
+<div class="tab-content white_card_background p-3" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-emailtab1" role="tabpanel"
+        aria-labelledby="pills-emailtab1-tab" tabindex="0">
+        <div class="d-flex flex-column gap-4">
+            <!-- email user details -->
+            <div class="d-flex justify-content-between user_email">
+                <div class="d-flex gap-3">
+                    <img src="assets/images/svg-img/candidate-Avatar.svg" class="avtar">
+                    <div>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <span class="circle"></span>
+                            <h4 class="small-text Medium mb-0">{{ emailRequest.recipientUsername }}</h4>
+                        </div>
+                        <h3 class="Regular Caption mb-0">{{ emailRequest.sendTo }}</h3>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <h5 class="x-small-text Medium mb-0">{{ emailRequest.dateTime | date: 'hh:mm:ss a' }} </h5>
+                    <img src="assets/images/svg-img/reply.svg" height="24" width="24">
+                </div>
+            </div>
+            <!-- email type here -->
+
+            <div class="email_details">
+                <h1 class="mb-2">{{ emailRequest.emailSubject }}</h1>
+                <p [innerHTML]="emailRequest.message"></p>
+            </div>
+            <!-- document Attachment -->
+            <div class="document_attech">
+                <h3 class="medium-text Medium mb-3">Attachments</h3>
+                <div class="document_grid gap-4">
+                    <div class="secondary_card_background document_card d-flex gap-2">
+                        <div>
+                            <img [src]="imageUrl + emailRequest.fileName" width="27" alt="Attachment Icon">
+                        </div>
+                    </div>
+                </div>
+            </div>                <!-- email send box -->
+            <div class="task p-3">
+                <div class="d-flex justify-content-between send_email py-2 mb-3">
+                    <div class="d-flex gap-2">
+                        <h2 class="medium-text Medium mb-0">To :</h2>
+                        <!-- inbox -->
+                        <h2 class="Caption Medium p-1 mb-0">Add guest <img
+                                src="assets/images/svg-img/emailIcon.svg" class="mx-0 ms-1"
+                                height="8" width="8"></h2>
+                        <!-- send email -->
+                        <h2 class="Caption Medium p-1 mb-0 Primarylight_background">Rashmi
+                            Rajput <img src="assets/images/svg-img/emailIcon.svg"
+                                class="mx-0 ms-1" height="8" width="8"></h2>
+                    </div>
+                    <div class="d-flex gap-1">
+                        <h2 class="medium-text Medium mb-0">Cc</h2>
+                        <h2 class="medium-text Medium mb-0">Bcc</h2>
+                    </div>
+                </div>
+                <div class="email_details border-0 mb-5 pb-0">
+                    <p>Dear,</p>
+                    <p>Lorem ipsum dolor sit amet consectetur. Sem volutpat aliquet vitae
+                        adipiscing.</p>
+                </div>
+                <!-- editor add -->
+                <div id="editor1"></div>
+                <!-- button -->
+                <div class="d-flex gap-3 justify-content-end mt-5">
+                    <img src="assets/images/svg-img/delete-modal.svg"
+                        class="Rejection Rejection_bg p-2">
+                    <button type="submit"
+                        class="primary_btn medium-text  Medium py-1  p-4">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

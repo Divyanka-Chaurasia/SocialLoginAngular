@@ -6,8 +6,101 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+   <link rel="stylesheet" href="assets/css/style.css">
+
+   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+   <link rel="stylesheet" href="assets/css/stylesheet.css">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body class="mat-typography">
   <app-root></app-root>
+
+  <!-- SCRIPTS LINKS -->
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/darktheme.js"></script>
+
+  <!-- FILTER SCRIPT -->
+  <script>
+
+    //Filter options selector 
+
+    var optionMenu = document.querySelector(".select-menu"),
+
+        selectBtn = optionMenu.querySelector(".select-btn"),
+
+        options = optionMenu.querySelectorAll(".option"),
+
+        sBtn_text = optionMenu.querySelector(".sBtn-text");
+
+    selectBtn.addEventListener("click", () =>
+
+        optionMenu.classList.toggle("active")
+
+    );
+
+    options.forEach((option) => {
+
+        option.addEventListener("click", () => {
+
+            let selectedOption = option.querySelector(".option-text").innerText;
+
+            sBtn_text.innerText = selectedOption;
+
+            optionMenu.classList.remove("active");
+
+        });
+
+    });
+
+    //----Filter end-----
+</script>
+  <!-- rating script -->
+  <script>
+      function rate(starNumber) {
+          var stars = document.querySelectorAll('.star');
+
+          // Remove 'active' class from all stars
+          stars.forEach(function (star) {
+              star.classList.remove('active');
+          });
+
+          // Add 'active' class to clicked star and previous stars
+          for (var i = 0; i < starNumber; i++) {
+              stars[i].classList.add('active');
+          }
+      }
+  </script>
+  <!-- text editor -->
+  <!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/40.0.0/ckeditor.min.js"></script> -->
+  <script>
+      ClassicEditor.create(document.querySelector("#editor1")).catch((error) => {
+          console.error(error);
+      });
+
+  </script>
+  <script>
+      ClassicEditor.create(document.querySelector("#editor2")).catch((error) => {
+          console.error(error);
+      });
+
+  </script>
+  <script>
+      ClassicEditor.create(document.querySelector("#editor3")).catch((error) => {
+          console.error(error);
+      });
+
+  </script>
+
+<script>
+  
+//----Filter end-----
+
+</script>
 </body>
 </html>

@@ -1,0 +1,174 @@
+<div class="p-3 user_details d-flex flex-column gap-3">
+  <!-- email top details -->
+  <div class="d-flex justify-content-between align-items-start">
+    <!-- user icon -->
+    <div data-bs-toggle="modal" href="#emailprofile" role="button">
+      <img src="assets/images/svg-img/user-icon.svg" class="email_icon">
+    </div>
+    <div class="d-flex gap-3">
+      <!--Filter options selector start-->
+      <div class="filter-box position-relative">
+        <div class="select-menu">
+          <div class="select-btn">
+            <span class="sBtn-text">Inbox</span>
+            <svg class="select-menu" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.9655 9.51733L11.9999 14.4829L7.03442 9.51733" stroke="#083160" stroke-width="1.5"
+                stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <ul class="options p-0">
+            <li (click)="getAllInboxEmail()" class="option">
+              <a class="option-text" >Inbox</a>
+            </li>
+            <li  (click)="getAllSentEmail()" class="option">
+              <a class="option-text">Sent</a>
+            </li>
+            <li (click)="getFavoriteEmail()" class="option">
+              <a class="option-text" >Favorite</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="white_card_background d-flex justify-content-center align-items-center">
+        <div class="rating" id="rating">
+          <span class="star blue" [class.active]="isFavoriteActive"></span>
+        </div>
+      </div>
+      <!-- button -->
+      <button type="button" class="primary_btn medium-text Medium px-4 py-1" data-bs-toggle="modal" href="#Message"
+        role="button">
+        Compose
+      </button>
+    </div>
+  </div>
+  <!-- search box -->
+  <div class="position-relative">
+    <input type="text" placeholder="Search" class="search_input_field py-1 px-4 ps-2 w-100" [(ngModel)]="searchClassName" (keyup)="search()">
+    <i class="bi bi-search search_img"></i>
+  </div>
+  <!-- cards -->
+  <ul class="nav nav-pills mb-3 email_tabs" id="pills-tab" role="tablist">
+    <!-- email list card tab-1 -->
+    <li class="nav-item" role="presentation" *ngFor="let email of allEmails;let i = index">
+      <button class="nav-link active  p-0 rounded-0" id="pills-emailtab1-tab" data-bs-toggle="pill"
+        data-bs-target="#pills-emailtab1" type="button" role="tab" aria-controls="pills-emailtab1" aria-selected="true"
+        (click)="redirectToContent(email.id)">
+        <div class="white_card_background p-3 d-flex justify-content-between">
+          <div class="d-flex align-items-start gap-3">
+            <img src="assets/images/svg-img/emailAvatar.svg" class="email_avtar">
+            <div class="email_card_details d-flex flex-column align-items-start gap-2">
+              <h2 class="mb-0">{{email.recipientUsername}}</h2>
+              <h3 class="mb-0">{{ email.sendTo.join(', ') }}</h3>
+              <h4 class="mb-0">{{ email.emailSubject }} </h4>
+            </div>
+          </div>
+          <div class="card_right_details">
+            <h2>{{ email.dateTime | date: 'hh:mm:ss a' }}</h2>
+            <div class="rating" id="rating">
+              <span class="star" [class.active]="email.status" (click)="toggleStatus(email)"></span>
+            </div>
+          </div>
+        </div>
+      </button>
+    </li>
+  </ul>
+</div>
+<!-- Task edit modal -->
+<div class="modal fade" id="Message" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog large_modal modal-dialog-centered mx-0 ms-auto">
+    <div class="modal-content" style="position: absolute; right: 20px; bottom: 20px;">
+       <form >
+        <div class="modal-header secondary_card_background modal_heading px-4 py-3">
+          <h1 class="modal-title Sub-Heading Medium"> New Message </h1>
+          {{emailRequest|json}}
+        </div>
+        <div class="modal-body modal_details p-0">
+          <div class="d-flex justify-content-between Compose_email px-4 py-2">
+            <div class="d-flex gap-2">
+              <h2 class="medium-text Medium mb-0">To:</h2>
+              <mat-chip-grid #toChipGrid aria-label="Enter To email">
+                <mat-chip-set aria-label="To selection">
+                  <mat-chip-row *ngFor="let email of emailRequest.sendTo; let i = index"
+                    (removed)="remove(email, 'sendTo')" [editable]="true" (edited)="edit(email, $event, 'sendTo')"
+                    [aria-description]="'press enter to edit ' + email">
+                    {{ email }}
+                    <button matChipRemove [attr.aria-label]="'remove ' + email">
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                  <input class="input-border" [matChipInputFor]="toChipGrid"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="add($event, 'sendTo')" />
+                </mat-chip-set>
+              </mat-chip-grid>
+            </div>
+            <div class="d-flex gap-1">
+              <h2 type="button" class="medium-text Medium mb-0" (click)="toggleInput('cc')">Cc</h2>
+              <h2 type="button" class="medium-text Medium mb-0" (click)="toggleInput('bcc')">Bcc</h2>
+            </div>
+          </div>
+          <div class="Compose_email mb-5 px-4 py-2" *ngIf="showCcInput">
+            <h3 class="medium-text Medium mb-0">Cc</h3>
+            <mat-chip-grid   #ccChipGrid aria-label="Enter Cc email">
+              <mat-chip-set  aria-label="Cc selection">
+                <mat-chip-row *ngFor="let email of emailRequest.cc; let i = index" (removed)="remove(email, 'cc')"
+                  [editable]="true" (edited)="edit(email, $event, 'cc')"
+                  [aria-description]="'press enter to edit ' + email">
+                  {{ email }}
+                  <button matChipRemove [attr.aria-label]="'remove ' + email">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+                <input class="input-border" [matChipInputFor]="ccChipGrid"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'cc')" />
+              </mat-chip-set>
+            </mat-chip-grid>
+          </div>
+          <div class="Compose_email mb-5 px-4 py-2" *ngIf="showBccInput">
+            <h3 class="medium-text Medium mb-0">Bcc</h3>
+            <mat-chip-grid #bccChipGrid aria-label="Enter Bcc email">
+              <mat-chip-set aria-label="Bcc selection">
+                <mat-chip-row *ngFor="let email of emailRequest.bcc; let i = index" (removed)="remove(email, 'bcc')"
+                  [editable]="true" (edited)="edit(email, $event, 'bcc')"
+                  [aria-description]="'press enter to edit ' + email">
+                  {{ email }}
+                  <button matChipRemove [attr.aria-label]="'remove ' + email">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+                <input class="input-border" [matChipInputFor]="bccChipGrid"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'bcc')" />
+              </mat-chip-set>
+            </mat-chip-grid>
+          </div>
+          <div class="Compose_email mb-5 px-4 py-2 d-flex">
+            <h2 class="medium-text Medium mb-0">Subject:</h2>
+            <input type="text" id="emailSubject" name="emailSubject" [(ngModel)]="emailRequest.emailSubject" class="full-width">
+          </div>
+          <div class="Compose_email mb-5 px-4 py-2" ><ckeditor style="height: 429px;"  [editor]="Editor" [(ngModel)]="emailRequest.message" name="message" ></ckeditor>
+          </div>
+          <div class="d-flex gap-3 justify-content-end mt-5 p-4">
+            <!-- <span style="display: flex; justify-content: end;">
+              <input  type="file" id="fileName" name="fileName" class="full-width file_select" #fileInput (change)="setImage($event)"><i class="bi bi-paperclip"></i>
+              <span (click)="removeImage(fileInput)" *ngIf="emailRequest.fileName!==''" ><i class="bi bi-x-lg"></i></span>
+            </span> -->
+            <div style="display: flex; justify-content: end;">
+              <input type="file" id="fileName" name="fileName" class="full-width file_select" #fileInput (change)="setImage($event)" style="display: none;">
+              <label for="fileName" class="file-input-label">
+                <i class="bi bi-paperclip fs-4"></i>
+              </label>
+              <span (click)="removeImage(fileInput)" *ngIf="emailRequest.fileName !== ''">
+                <i class="bi bi-x-lg"></i>
+              </span>
+            </div>
+            <button type="button" (click)="sendEmail()" class="primary_btn medium-text Medium py-1 p-4">Send</button>
+            <i class="bi bi-x fs-3" (click)="closeModel('Message')"></i>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+.dropdown-menu {
+    max-width: 200px; /* Adjust the max-width as per your requirement */
+  }
+
+  .btn-group .dropdown-menu {
+    min-width: 126px; /* Minimum width */
+  }
+  
+  /* Additional styles to handle different dropdown sizes */
+  .btn-group.dropdown-lg .dropdown-menu {
+    min-width: 200px; /* Adjust based on your requirements */
+  }

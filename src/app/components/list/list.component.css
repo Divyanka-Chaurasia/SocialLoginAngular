@@ -1,0 +1,100 @@
+.input-container {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.email-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 0; /* Reset padding */
+    margin: 0; /* Reset margin */
+    font-size: inherit; /* Inherit font size */
+    line-height: inherit; /* Inherit line height */
+}
+.full-width {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0; /* Reset padding */
+    margin: 0; /* Reset margin */
+    font-size: inherit; /* Inherit font size */
+    line-height: inherit; /* Inherit line height */
+}
+
+.full-width {
+    width: 100%;
+}
+
+.chat-box-container {
+    padding: 0 20px; /* Adjust padding as needed */
+}
+
+.chat-box {
+    width: 100%;
+    min-height: 150px; /* Adjust min-height as needed */
+    resize: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-top: 10px; /* Adjust margin-top as needed */
+}
+
+
+.select-menu.active .options {
+    display: block;
+  }
+  
+  .options {
+    display: none;
+  }
+  
+  .select-menu {
+    position: relative;
+  }
+  
+  .select-btn {
+    cursor: pointer;
+  }
+  .example-chip-list {
+    width: 100%;
+  }
+
+  Vertically align chips */
+.example-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px; 
+}
+
+.chip-container {
+  background-color: white; 
+  padding: 10px; 
+}
+/* Apply background-color: transparent to mat-form-field */
+.example-chip-list .mat-form-field-wrapper {
+  background-color: transparent !important;
+}
+
+/* Remove bottom border color from filled text field */
+.example-chip-list .mat-form-field.mat-form-field-type-mat-chip-list .mat-form-field-underline {
+  display: none !important;
+}
+
+/* Make filled text field background transparent */
+.example-chip-list .mat-form-field.mat-form-field-type-mat-chip-list .mat-form-field-flex {
+  background-color: transparent !important;
+}
+
+.example-chip-list .mat-form-field-underline {
+  display: none;
+}
+.input-border{
+  border: 1px solid transparent;
+}
+.file_select{
+  width: 10%;
+}
